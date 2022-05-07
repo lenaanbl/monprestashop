@@ -1,0 +1,52 @@
+
+.container-button-retour{
+    text-decoration: none;
+    margin: 10px;
+    font-size: 20;
+    color: #eaeaea;
+}
+
+.container-button-retour::hover{
+    color: aquamarine;
+    transition: 0.5s;
+}
+
+.profil-container
+{
+    display: block;
+    background: rgba(105, 53, 53, 0.3);
+    margin: auto;
+    color: aliceblue;
+    margin: 50px;
+    width: 60%;
+    height: 70%;
+    padding: 20px 30px;
+
+}
+
+.profil-title
+{
+    font-size: 20;
+}
+.form-profil-avatar
+{
+	display: flex;
+	align-items: flex-end;
+	margin-bottom: 45px;
+}
+
+.container-avatar
+{
+	display: flex;
+	flex-direction: column;
+}
+
+.profil-avatar
+{
+	width: 100px;
+    margin-bottom: 5px;
+    background: #eaeaea;
+    padding: 5px;
+    border-radius: 100px;
+}
+

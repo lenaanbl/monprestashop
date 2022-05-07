@@ -1,18 +1,4 @@
 
-<!DOCTYPE html>
-<html lang="fr">
-	<head>	
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta charset="utf-8" />
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@200&display=swap" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="assets/css/header.css">
-		<title>Prestachope !</title>		
-	</head>
-
-	
-	<body>
 
         <nav>
 
@@ -64,6 +50,139 @@
 
         </nav>
 
-        <script src="assets/header_app.js"></script>
+        <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Antonio:wght@200&display=swap');
+
+
+        nav
+        {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            min-height: 8vh;
+            background-color:rgb(0, 0, 0);
+            font-family: 'Antonio', sans-serif;
+        }
+
+        .logo
+        {
+            color: rgb(255, 246, 245);
+            text-transform: uppercase;
+            letter-spacing: 10px;
+            font-size: 25px;
+        }
+
+        .nav-links
+        {
+            display: flex;
+            justify-content: space-around; 
+        }
+
+        .nav-links li
+        {
+            text-decoration: none;
+            list-style: none;
+        }
+
+        .nav-links a
+        {
+            color: #fff;
+            text-decoration: none;
+            letter-spacing: 3px;
+            font-weight: bold;
+            font-size: 20px;
+            padding: 15px;
+        }
+
+        .burger
+        {
+            display: none;
+            cursor: pointer;
+        }
+
+        .burger div
+        {
+            width: 25px;
+            height: 3px;
+            background-color: rgb(100, 48, 41);
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        @media screen and (max-width:1024px) {
+            .nav-links
+            {
+                width: 60%;
+            }
+        }
+
+        @media screen and (max-width:650px) {
+
+            body 
+            {
+                overflow-x: hidden;
+            }
+            .nav-links
+            {
+                position: absolute;
+                right: 0%;
+                height: 92vh;
+                top: 8vh;
+                color: rgb(100, 48, 41);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 50%;
+                border-radius: 10px;
+                transform: translateX(100%);
+                transition: transform 0.5s ease-in;
+            }
+
+            .nav-links li
+            {
+                opacity: 0;
+            }
+
+            .burger
+            {
+                display: block;
+            }
+        }
+
+        .nav-active
+        {
+            transform: translateX(0%);
+        }
+
+        @keyframes navLinkFade {
+            from{
+                opacity: 0;
+                transform: translateX(50px); 
+            }
+
+            to{
+                opacity: 1;
+                transform: translateX(0px);
+            }
+        }
+
+        .toggle .line1
+        {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .toggle .line2
+        {
+            opacity: 0;
+        }
+
+        .toggle .line3
+        {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+
+        </style>
 
 

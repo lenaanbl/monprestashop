@@ -1,9 +1,10 @@
 <?php
 
-include_once('DTO/DatabaseProduitsDTO.php');
+    include_once ('tools/DataBaseLinker.php');
+
+    include_once('DTO/DatabaseProduitsDTO.php');
 
 class ProduitDAO{
-
 
 
     public static function getProduits(){       
@@ -24,7 +25,7 @@ class ProduitDAO{
 
         
         $connex = DatabaseLinker::getConnexion();
-        $state = $connex->prepare('SELECT * FROM produits');
+        $state = $connex->prepare('SELECT * FROM produits WHERE id_categorie=1');
         $state->execute();
         $resultats = $state->fetchAll();
         $tab_produit = [];
@@ -81,27 +82,71 @@ class ProduitDAO{
         return $produit;
     }
 
-    //fonction afin de voir a quelle categorie appartient le produit
-    /*public static function getProduitsByIdCategorie($id_produit)
+    public static function getProduitsByVoyage()
     {
-        $produits_array = array();
 
         $connex = DatabaseLinker::getConnexion();
-
-        $state = $connex -> prepare('SELECT id_produit FROM produit WHERE id_categorie=? ORDER BY prix');
-        $state->bindParam(1, $id_produit);
+        $state = $connex->prepare('SELECT * FROM produits WHERE id_categorie=2');
+        
         $state->execute();
-
         $resultats = $state->fetchAll();
+        $tab_produit = [];
 
-        foreach ($resultats as $result)
-        {
-            $produit = ProduitDAO::getProduitsById($result["id_produit"]);
-            $produits_array[] = $produit;
+        if(empty($resultats)){
+            
+            $tab_produit = null;
         }
 
-        return $produits_array;
-    }*/
+        else{
+
+            foreach ($resultats as $value){
+                $produit = new ProduitDTO();
+                $produit->setIdProduit($value['id_produit']);
+                $produit->setNomProduit($value['nom']);
+                $produit->setDescription($value['description']);
+                $produit->setPrix($value['prix']);
+                $produit->setQuantite($value['quantite']);
+                $produit->setPathPhoto($value['picture']);
+                $produit->setIdCategorie($value['id_categorie']);
+                $tab_produit[] = $produit;
+            }
+        }
+
+        return $tab_produit;
+    }
+
+    public static function getProduitsByCategorie($idcat)
+    {
+
+        $connex = DatabaseLinker::getConnexion();
+        $state = $connex->prepare('SELECT * FROM produits WHERE id_categorie="'.$idcat.'"');
+        $state->bindParam(1, $idcat);
+        $state->execute();
+        $resultats = $state->fetchAll();
+        $tab_produit = [];
+
+        if(empty($resultats)){
+            
+            $tab_produit = null;
+        }
+
+        else{
+
+            foreach ($resultats as $value){
+                $produit = new ProduitDTO();
+                $produit->setIdProduit($value['id_produit']);
+                $produit->setNomProduit($value['nom']);
+                $produit->setDescription($value['description']);
+                $produit->setPrix($value['prix']);
+                $produit->setQuantite($value['quantite']);
+                $produit->setPathPhoto($value['picture']);
+                $produit->setIdCategorie($value['id_categorie']);
+                $tab_produit[] = $produit;
+            }
+        }
+
+        return $tab_produit;
+    }
 
     public static function deleteProduit($id_produit){
 

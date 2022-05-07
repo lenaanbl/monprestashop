@@ -18,6 +18,7 @@ CREATE TABLE clients (
   montant FLOAT NOT NULL,
   password VARCHAR (64) NOT NULL,
   admin TINYINT (1) NOT NULL,
+  ban TINYINT (1) NOT NULL,
   CONSTRAINT client_primary_key PRIMARY KEY (id_client)
 )ENGINE=InnoDB;
 
@@ -25,6 +26,38 @@ CREATE TABLE categories(
         id_categorie Int  Auto_increment  NOT NULL ,
         nom         VARCHAR(50) NOT NULL
 	,CONSTRAINT categorie_primary_key PRIMARY KEY (id_categorie)
+)ENGINE=InnoDB;
+
+CREATE TABLE recette(
+        id_recette int AUTO_INCREMENT NOT NULL,
+        nom_recette VARCHAR(64) NOT NULL,
+        descriptif TEXT(255) NOT NULL,
+        picture VARCHAR(64) NOT NULL,
+        id_categorie int NOT NULL,
+CONSTRAINT recette_primary_key PRIMARY KEY (id_recette),
+CONSTRAINT recette_categorie_foreign_key FOREIGN KEY (id_categorie) REFERENCES categories(id_categorie)
+)ENGINE=InnoDB;
+
+CREATE TABLE voyage(
+        id_voyage int AUTO_INCREMENT NOT NULL,
+        nom_voyage VARCHAR(64) NOT NULL,
+        descriptif TEXT(255) NOT NULL,
+        picture VARCHAR(64) NOT NULL,
+        prix FLOAT NOT NULL,
+        id_categorie int NOT NULL,
+CONSTRAINT voyage_primary_key PRIMARY KEY (id_voyage),
+CONSTRAINT voyage_categorie_foreign_key FOREIGN KEY (id_categorie) REFERENCES categories(id_categorie)
+)ENGINE=InnoDB;
+
+CREATE TABLE logement(
+        id_logement int AUTO_INCREMENT NOT NULL,
+        nom_logement VARCHAR(64) NOT NULL,
+        descriptif TEXT(255) NOT NULL,
+        picture VARCHAR(64) NOT NULL,
+        prix FLOAT NOT NULL,
+        id_categorie int NOT NULL,
+CONSTRAINT logement_primary_key PRIMARY KEY (id_logement),
+CONSTRAINT logement_categorie_foreign_key FOREIGN KEY (id_categorie) REFERENCES categories(id_categorie)
 )ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS produits;
@@ -41,9 +74,6 @@ CONSTRAINT produit_primary_key PRIMARY KEY (id_produit),
 CONSTRAINT produit_categorie_foreign_key FOREIGN KEY (id_categorie) REFERENCES categories(id_categorie)
 )ENGINE=InnoDB;
 
-
-
-
 CREATE TABLE commandes(
         id_commande   Int  Auto_increment  NOT NULL ,
         nb_produits    Int NOT NULL ,
@@ -57,7 +87,7 @@ CREATE TABLE commandes(
 
 CREATE TABLE messages(
         id_message Int  Auto_increment  NOT NULL ,
-        message       Text NOT NULL ,
+        message Text NOT NULL ,
         date DATETIME,
         sujet VARCHAR (64),
 	CONSTRAINT message_primary_key PRIMARY KEY (id_message)
@@ -65,18 +95,26 @@ CREATE TABLE messages(
 
 CREATE TABLE boutique(
         id_boutique Int  Auto_increment  NOT NULL ,
-        tresorie     Float NOT NULL ,
+        tresorie     Float NOT NULL,
         nb_commandes   Int NOT NULL
 	,CONSTRAINT Entreprise_PK PRIMARY KEY (id_boutique)
 )ENGINE=InnoDB;
 
 INSERT INTO `categories` (`id_categorie`, `nom`) VALUES
-(1, 'Biere');
+(1, 'cuisine'),
+(2, 'voyage'),
+(3, 'logement'),
+(4, 'produits');
 
+INSERT INTO `recette` (`id_recette`, `nom_recette`, `descriptif`, `picture`, `id_categorie`) VALUES ('1', 'Crêpes', '2 oeufs, 2 cuillères à soupe de farine, lait ou eau, sucre vanillé', 'crepe.jpg', '1');
 
-INSERT INTO `clients` (`id_client`, `pseudo`, `nom`, `prenom`, `picture`, `adresse`, `mail`, `montant`, `password`, `admin`, `ban`) VALUES
-(1, 'admin', 'admin', 'admin', 'assets/images/images_profil/admin.jpg', '27 rue du Port, 56230 ', 'admin@gmail.com', 1000, 'admin', 1, 0),
-(2, 'test123', 'test', 'test', 'assets/images/images_profil/test123_profil.jpg', '4 impasse des oliviers, 63000', 'testtest@gmail.com', 456.21, 'test123', 0, 0);
+INSERT INTO `voyage` (`id_voyage`, `nom_voyage`, `descriptif`, `picture`, `prix`, `id_categorie`) VALUES ('1', 'Corse - Saint Florent', '2 semaines dans un camping très calme proche de la petite plage de saint florent', 'corse.jpg', '750', '2');
+
+INSERT INTO `logement` (`id_logement`, `nom_logement`, `descriptif`, `picture`, `prix`, `id_categorie`) VALUES ('1', 'Montpellier - 40m²', 'Proche du centre et de tout les petits commerces, plage à 20 minutes', 'montpellier.jpg', '390', '3');
+
+INSERT INTO `clients` (`id_client`, `pseudo`, `nom`, `prenom`, `picture`, `mail`, `montant`, `password`, `admin`, `ban`) VALUES
+(1, 'admin', 'admin', 'admin', 'assets/images/images_profil/admin.jpg', 'admin@gmail.com', 1000, 'admin', 1, 0),
+(2, 'test123', 'test', 'test', 'assets/images/images_profil/test123_profil.jpg','testtest@gmail.com', 456.21, 'test123', 0, 0);
 
 
 INSERT INTO `messages` (`id_message`, `message`, `date`, `sujet`) VALUES

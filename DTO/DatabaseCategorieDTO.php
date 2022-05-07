@@ -1,7 +1,7 @@
 <?php
 
 
-class CategorieDTO
+class DatabaseCategorieDTO
 {
     private $id_categorie;
     private $nom;

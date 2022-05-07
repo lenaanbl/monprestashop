@@ -1,8 +1,10 @@
 <?php
 
-    include_once('DTO/DatabaseCategoryDTO.php');
+    include_once('DTO/DatabaseCategorieDTO.php');
+    include_once ('tools/DataBaseLinker.php');
 
-    class CategoryDAO
+
+    class DatabaseCategorieDAO
     {
 
         public static function getAllCat(){
@@ -24,7 +26,7 @@
             {
                 foreach ($resultats as $value)
                 {
-                    $cat = new CategorieDTO();
+                    $cat = new DatabaseCategorieDTO();
                     $cat->setIdCategorie($value['id_categorie']);
                     $cat->setNomCategorie($value['nom']);
                     $tab[] = $cat;

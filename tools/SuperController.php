@@ -1,5 +1,6 @@
 <?php
 
+	include_once("tools/rooter.php");
 
 	class SuperController
 	{
@@ -11,52 +12,58 @@
 
 					include_once('pages/connexion/ConnexionController.php');
 
-					$instanceController = new ConnexionController();
+					$instanceController = new ConnexionController();					
 				
-					if(!empty($_POST['pseudo_login']) && !empty($_POST['password_login'])) 
+					if(!empty($_POST['email']) && !empty($_POST['password'])) 
 
 					{
-						if ($instanceController->authenticate($_POST['pseudo_login'], sha1($_POST['password_login'])))
+						if ($instanceController->Authenticated($_POST['email'], (sha1($_POST['password']))) == true)
 						{
-							if ($instanceController->isBan($_SESSION["id_client"]) == false)
+							if (isset($_SESSION['is_ban']))
                             {
-								Rooter::redirectUser('accueil');						
-
+                                session_destroy();
+                                $instanceController->redirectUser_ban();
                             }
+
+							else{
+								$instanceController->redirectUser();
+							}				
+							
 						}
 
-						if ($instanceController->authenticate($_POST['pseudo_login'], sha1($_POST['password_login'])) == false)
-						{
-							Rooter::redirectUser('error');						
+						else{
+							session_destroy();
+							$instanceController->includeViewConnexion();
 						}
 					}
 
-					// inscription 
-
-					if(!empty($_POST['pseudo']) && !empty($_POST['mail']) && !empty($_POST['nom']) && !empty($_POST['password']) && !empty($_POST['prenom']) && !empty($_POST['picture']) && !empty($_POST['adresse']) && !empty($_POST['montant'])){
-						
-						$instanceController->InsertClient($_POST['pseudo'], $_POST['nom'], $_POST['prenom'], $_POST['picture'], $_POST['adresse'], $_POST['mail'], $_POST['montant'], $_POST['password']);
-					
-					}
-					
 					$instanceController->includeViewConnexion();
 
 					break;
 
 				case 'inscription' :
+				
+					include_once('pages/inscription/InscriptionController.php');
+
+					$instanceController = new InscriptionController();
 					
-					include_once('pages/connexion/ConnexionController.php');
+					echo "<p>TEST</p>";
 
-					$instanceController = new ConnexionController();
-
-					if(!empty($_POST['pseudo']) && !empty($_POST['mail']) && !empty($_POST['nom']) && !empty($_POST['password']) && !empty($_POST['prenom']) && !empty($_POST['picture']) && !empty($_POST['adresse']) && !empty($_POST['montant'])){
+					if(!empty($_POST['nom']) && !empty($_POST['prenom']) && !empty($_POST['wallet']) && !empty($_POST['email']) && !empty($_POST['password'])){
 						
-						$instanceController->InsertClient($_POST['pseudo'], $_POST['nom'], $_POST['prenom'], $_POST['picture'], $_POST['adresse'], $_POST['mail'], $_POST['montant'], $_POST['password']);
+						$insert = $instanceController->InsertClient($_POST['nom'], $_POST['prenom'], $_POST['email'],$_POST['wallet'], $_POST['password']);
+						if($insert == true){
+							$instanceController->redirectUser();
+						}	
+						
+						else
+						{
+							echo 'error';
+						}
+					}	
 					
-					}
+					$instanceController->includeView();
 
-
-					$instanceController->includeViewInscription();
 
 					break;
 

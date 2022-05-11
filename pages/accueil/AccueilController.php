@@ -18,17 +18,6 @@
 			return $categorie;
 		}
 
-		public static function getVoyage()
-		{
-			$produit = ProduitDAO::getProduitsByVoyage();
-			return $produit;
-		}
-
-		public static function getProdByCat($idcat){
-			$prodtab = ProduitDAO::getProduitsByCategorie($idcat);
-			return $prodtab;
-		}
-
 		public function includeView()
 		{		
 			include_once('accueil.php');

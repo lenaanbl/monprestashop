@@ -14,67 +14,71 @@
 			
 		}
 
-		public function includeViewInscription()
-		{
-			include_once('pages/connexion/inscription.php');
-			
+		public function redirectUser(){
+			header('Location: index.php?page=accueil');
 		}
 
-		
-		
-		/*public function authenticate($pseudo, $password)
-		{
-			$authenticated = false;
-			
-			$user = UserDAO::getUserWithPseudoPassword($pseudo, $password);
-			
-			if ($user != null)
-			{		
-				if ($user->getAdmin())
-				{
-					$_SESSION["admin"] = true;
-				}
-				else
-				{
-					$_SESSION["admin"] = false;
-				}
-				
-				$_SESSION["id_client"] = $user->getIdClient();
-				
-				
-				
-				$authenticated = true;
-			}
-			
-			return $authenticated;
-		}*/
 
-		public static function authenticate($pseudo, $password)
+		public static function Authenticated($email, $password)
 		{
 			$bool = false;
 
-			$client = UserDAO::getUserWithPseudoPassword($pseudo, $password);
+			$client = UserDAO::getUserWithEmailPassword($email, $password);
 
-			if ($client != null && $client->getIsBan() == 0)
+			if ($client != null)
 			{
-
-
-				if ($client->getAdmin())
-				{
-					$_SESSION["admin"] = true;
-				}
-				else
-				{
-					$_SESSION["admin"] = false;
-				}
 				
-				$_SESSION["id_client"] = $client->getIdClient();
 
+				if ($client->getIsBan() == 1)
+				{
+					$_SESSION['is_ban'] = true;
+				}
+
+				else{
+					$_SESSION["idClient"] = $client->getIdclient();
+					$_SESSION["panier"] = array();
+
+					$admin = UserDAO::getAdmin($_SESSION["idClient"]);
+					if ($admin->getAdmin() == 1)
+					{
+						$_SESSION["admin"] = $client->getAdmin();
+					}
+					
+				}	
+				
 				$bool = true;
 			}
 			
 			return $bool;
 		}
+
+		public static function authenticate($email, $password){
+
+			$isClient = false;
+			$client = UserDAO::getUserWithEmailPassword($email, $password);
+
+			if($client != null){
+
+				if ($client->getIsBan() == 1)
+				{
+					$_SESSION['is_ban'] = true;
+				}
+
+				else
+			{
+				$_SESSION["id_client"] = $client->getIdClient();
+				$_SESSION["panier"] = array();
+				$admin = UserDAO::getAdmin($_SESSION["id_client"]);
+				if ($admin->getAdmin() == 1)
+				{
+					$_SESSION["is_admin"] = $client->getAdmin();
+				}
+			}
+			}
+
+			return $isClient;
+		}
+
 
 		public static function isBan($id)
 		{
@@ -89,10 +93,11 @@
 			return $bool;
 		}
 
-		public function InsertClient($pseudo, $nom, $prenom, $picture, $adresse, $mail, $montant, $password){
-			$insert = UserDAO::insert($pseudo, $nom, $prenom, $picture, $adresse, $mail, $montant, $password);
-			return $insert;		
-		}
+		public static function redirectUser_ban()
+	{
+		header('Location: index.php?page=error');
+	}
+		
 	}
 
 ?>

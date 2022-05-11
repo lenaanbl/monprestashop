@@ -4,29 +4,25 @@
 
   <?php 
 
-    $categories = AccueilController::getCategorie();
-    $cat = $categories['id_categorie'];
 
-    $produits = AccueilController::getProdByCat($cat);
-    
+    $categories = DatabaseCategorieDAO::getAllCat();
 
-  ?>
 
-  <?php
-
-    foreach($categories as $cate){
+    foreach($categories as $cat){
 
       ?>
 
     <!-- on affiche le nom de la catégorie -->
-    <div class="h3"><?php echo $cate->getNomCategorie() ?></div>  
+    <div class="h3"><?php echo $cat->getNomCategorie() ?></div>  
     <div class="container-md pt-5 overflow-hidden">		
     <div class="row gy-5 my-2">
 
       
-    <?php foreach($produits as $prod){
+    <?php 
       
-      if($cate = 1 && $prod->getIdCategorie()== 1) {
+          $tabProduit = DatabaseCategorieDAO::getProduitsByCategorie($cat->getIdCategorie());
+
+          foreach($tabProduit as $prod){
         ?>
 
 
@@ -38,7 +34,7 @@
             <h5 class="card-title"><?php echo $prod->getNomProduit() ?></h5>
             <p class="card-text">Prix : <?php echo $prod->getPrix() ?></p>
             <?php if(!empty($_SESSION['id_client'])){ ?>
-            <a href="#" class="btn btn-primary">Ajouter au panier</a>
+            <a href="#" class="btn btn-primary">Acheter</a>
             <?php } ?>
           </div>
         </div>
@@ -46,34 +42,11 @@
       </div>
 
       <?php 
-      }            
-      
-      ?>
-
-      <?php if($cate == 2 && $prod->getIdCategorie() == 2){ ?>
-      
-          <div class="col-12 col-md-6 col-lg-3">
-            <a href="" class="content-food text-muted nav-link text-center">
-            <div class="card" style="width: 18rem;">
-              <img src="assets/images/produits/<?php echo $prod->getPathPhoto() ?>" class="card-img-top" style="height: 320px;" alt="">
-              <div class="card-body">
-                <h5 class="card-title"><?php echo $prod->getNomProduit() ?></h5>
-                <p class="card-text">Prix : <?php echo $prod->getPrix() ?></p>
-                <?php if(!empty($_SESSION['id_client'])){ ?>
-                <a href="#" class="btn btn-primary">Réserver</a>
-                <?php } ?>
-              </div>
-            </div>
-            </a>
-          </div>
-        
-      <?php
-            }
-            
-          }
-
         }
+      }        
+      
       ?>
+
     </div>	
   </div>
 

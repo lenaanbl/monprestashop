@@ -14,26 +14,18 @@
             $state = $connex->prepare('SELECT * FROM clients WHERE id_client = ?');
             $state->bindParam(1, $id);
             $state->execute();
-            $user= new UserDTO();
+            $resultats = $state->fetchAll();
 
-            $result = $state->fetch();
-
-            if (empty($result))
-            {
-                $user = null;
-            }
-
-            else
-            {
+            if(sizeof($resultats) > 0)
+            {   
+                $result = $resultats[0];
+                $user= new UserDTO();
                 $user->setIdClient($result['id_client']);
                 $user->setPrenom($result['prenom']);
                 $user->setNom($result['nom']);
-                $user->setPseudo($result['pseudo']);
-                $user->setAdresse($result['adresse']);
                 $user->setMail($result['mail']);
                 $user->setMontant($result['montant']);
                 $user->setPassword($result['password']);
-                $user->setPathPhoto($result['picture']);
                 $user->setAdmin($result['admin']);
                 $user->setIsBan($result['ban']);
             }
@@ -64,13 +56,11 @@
                     $user->setIdClient($result['id_client']);
                     $user->setPrenom($result['prenom']);
                     $user->setNom($result['nom']);
-                    $user->setPseudo($result['pseudo']);
-                    $user->setAdresse($result['adresse']);
                     $user->setMail($result['mail']);
                     $user->setMontant($result['montant']);
                     $user->setPassword($result['password']);
-                    $user->setPathPhoto($result['picture']);
                     $user->setIsBan($result['ban']);
+                    //$user->setAdmin($result['admin']);
                     $tab[] = $user;
                 }
             }
@@ -79,23 +69,16 @@
         }
 
 
-        public static function insert($pseudo, $nom, $prenom, $picture, $adresse, $mail, $montant, $password){
+        public static function InsertClient($nom, $prenom,$email,$wallet, $password){
+            $bdd= DataBaseLinker::getConnexion();
+        
+            $state = $bdd->prepare('INSERT into clients (nom, prenom, email, montant, password, admin, ban) VALUES (?, ?, ?, ?, ?,0,0)');
+            $state->execute(array($nom, $prenom, $email, $wallet, (sha1($password))));
+            $resulte = $state->fetch();
 
-             
-            $connex = DatabaseLinker::getConnexion();
-
-            $state = $connex -> prepare('INSERT INTO clients(pseudo, nom, prenom, picture, adresse, mail, montant, password, admin, ban) VALUES (?, ?, ?, ?, ?, ?, ?, sha1(?), "0", "0")');          
-            $state->bindParam(1, $pseudo);
-            $state->bindParam(2, $nom);
-            $state->bindParam(3, $prenom);
-            $state->bindParam(4, $picture);
-            $state->bindParam(5, $adresse);
-            $state->bindParam(6, $mail);
-            $state->bindParam(7, $montant);
-            $state->bindParam(8, $password);
-            $state->execute();
+            return true;
         }
-
+        
         public static function delete($id)
 		{
 			$connex = DatabaseLinker::getConnexion();
@@ -114,27 +97,39 @@
             $state->execute();
         }
 
-        public static function getUserWithPseudoPassword($pseudo, $password){
+        public static function getUserWithEmailPassword($email, $password){
 
-            $user = null;
+            $client = null;
 
             $connex = DatabaseLinker::getConnexion();
 
-            $state = $connex -> prepare('SELECT * FROM clients WHERE pseudo=? AND password=?');
-            $state->bindParam(1, $pseudo);
+            $state = $connex -> prepare('SELECT * FROM clients WHERE email=? AND password=sha1(?)');
+            $state->bindParam(1, $email);
             $state->bindParam(2, $password);
 
             $state->execute();
 
-            $resultats = $state->fetchAll();
-
-            if(sizeof($resultats) > 0){
-                
-                $result = $resultats[0];
-                $user = UserDAO::getUserById($result['id_client']);
+            $lineResultat = $state->fetchAll();
+            $client = new UserDTO();
+            $lineResultat = $state->fetch();
+    
+            if (empty($lineResultat)) 
+                {
+                    $client = null;
+                }
+            else
+            {
+                $client->setIdClient($lineResultat['id_client']);
+                $client->setNom($lineResultat['nom']);
+                $client->setPrenom($lineResultat['prenom']);
+                $client->setPassword($lineResultat['password']);
+                $client->setMail($lineResultat['email']);
+                $client->setMontant($lineResultat['montant']);
+                $client->setAdmin($lineResultat['admin']);
+                $client->setIsBan($lineResultat['ban']);
             }
 
-            return $user;
+            return $client;
         }
 
         public static function banUserByPseudo($pseudo)
@@ -175,12 +170,9 @@
                     $user->setIdClient($result['id_client']);
                     $user->setPrenom($result['prenom']);
                     $user->setNom($result['nom']);
-                    $user->setPseudo($result['pseudo']);
-                    $user->setAdresse($result['adresse']);
                     $user->setMail($result['mail']);
                     $user->setMontant($result['montant']);
                     $user->setPassword($result['password']);
-                    $user->setPathPhoto($result['picture']);
                     $user->setAdmin($result['admin']);
                     $user->setIsBan($result['ban']);
             }

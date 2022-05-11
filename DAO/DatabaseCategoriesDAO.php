@@ -36,6 +36,29 @@
 
         }
 
+        public static function getProduitsByCategorie($idcat)
+        {
+    
+            $produitArray = array();
+
+            $connex = DatabaseLinker::getConnexion();
+            $state = $connex->prepare('SELECT id_produit FROM produits WHERE id_categorie=?');
+            $state->bindParam(1, $idcat);
+            $state->execute();
+            $resultats = $state->fetchAll();
+            
+            foreach ($resultats as $result)
+            {
+                $produit = ProduitDAO::getProduitById($result["id_produit"]);
+                $produitArray[] = $produit;
+            }
+            
+            return $produitArray;
+    
+            
+        }
+    
+
         public static function updateCat($nom, $id_cat)
         {
             $connex = DatabaseLinker::getConnexion();

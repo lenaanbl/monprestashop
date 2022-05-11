@@ -115,39 +115,7 @@ class ProduitDAO{
         return $tab_produit;
     }
 
-    public static function getProduitsByCategorie($idcat)
-    {
-
-        $connex = DatabaseLinker::getConnexion();
-        $state = $connex->prepare('SELECT * FROM produits WHERE id_categorie="'.$idcat.'"');
-        $state->bindParam(1, $idcat);
-        $state->execute();
-        $resultats = $state->fetchAll();
-        $tab_produit = [];
-
-        if(empty($resultats)){
-            
-            $tab_produit = null;
-        }
-
-        else{
-
-            foreach ($resultats as $value){
-                $produit = new ProduitDTO();
-                $produit->setIdProduit($value['id_produit']);
-                $produit->setNomProduit($value['nom']);
-                $produit->setDescription($value['description']);
-                $produit->setPrix($value['prix']);
-                $produit->setQuantite($value['quantite']);
-                $produit->setPathPhoto($value['picture']);
-                $produit->setIdCategorie($value['id_categorie']);
-                $tab_produit[] = $produit;
-            }
-        }
-
-        return $tab_produit;
-    }
-
+   
     public static function deleteProduit($id_produit){
 
         $connex = DatabaseLinker::getConnexion();

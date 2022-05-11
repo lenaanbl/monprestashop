@@ -13,20 +13,3 @@
     include_once('tools/footer.html');
 
 ?>
-
-<style>
-
-.space
-{
-    display: flex;
-    justify-content: center;
-    background: bisque;
-}
-
-.error
-{
-    color: aliceblue;
-    margin: 10%;
-}
-
-</style>

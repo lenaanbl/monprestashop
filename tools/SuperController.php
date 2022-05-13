@@ -10,44 +10,45 @@
 			{
 				case 'connexion' : 
 
-					include_once('pages/connexion/ConnexionController.php');
+					include_once("pages/connexion/ConnexionController.php");
 
-					$instanceController = new ConnexionController();					
-				
-					if(!empty($_POST['email']) && !empty($_POST['password'])) 
+                    $instanceController = new ConnexionController();
 
-					{
-						if ($instanceController->Authenticated($_POST['email'], (sha1($_POST['password']))) == true)
-						{
-							if (isset($_SESSION['is_ban']))
+                    
+                    if(!empty($_POST['email']) && !empty($_POST['password'])) 
+                    {
+                        if ($instanceController->authenticate($_POST['email'], (sha1($_POST['password']))) == true)
+                        {
+                            if (isset($_SESSION['is_ban']))
                             {
                                 session_destroy();
                                 $instanceController->redirectUser_ban();
                             }
 
-							else{
-								$instanceController->redirectUser();
-							}				
-							
-						}
+							else
+                            {
+								echo "SESSION CREEE";
+								$_SESSION['id_client'] = true;
+                                $instanceController->redirectUser();
+								
+                            }
+                        }
+                        else
+                        {
+                            session_destroy();
+							echo "<p>ERREUR</p>";
+                        }
+                    }
 
-						else{
-							session_destroy();
-							$instanceController->includeViewConnexion();
-						}
-					}
-
-					$instanceController->includeViewConnexion();
-
-					break;
+                    $instanceController->includeViewConnexion();
+                    
+                    break;
 
 				case 'inscription' :
 				
 					include_once('pages/inscription/InscriptionController.php');
 
 					$instanceController = new InscriptionController();
-					
-					echo "<p>TEST</p>";
 
 					if(!empty($_POST['nom']) && !empty($_POST['prenom']) && !empty($_POST['wallet']) && !empty($_POST['email']) && !empty($_POST['password'])){
 						
@@ -66,30 +67,12 @@
 
 
 					break;
-
-				case 'deconnexion_' : 
-
-					include_once('pages/deconnexion/DeconnexionController.php');
-
-					$instanceController = new DeconnexionController();
-
-					$instanceController->deconnectUser();
-					Rooter::redirectUser('accueil');
-
-					break;
 				
 				case 'deconnexion' :
 
-					include_once('pages/deconnexion/DeconnexionController.php');
-
-					$instanceController = new DeconnexionController();
-
-					$instanceController->deconnectUser();
-					Rooter::redirectUser('connexion');
-
-					break;
-				
-					
+					session_destroy();
+                    header('Location: index.php?page=accueil');                  
+									
 					break;
 
 				case 'error' :
@@ -281,16 +264,35 @@
 
 					break;
 
-					case "addProduitToPanier" :
-						include_once ('pages/panier/Paniercontroler.php');
-						$instanceController=new Paniercontroler();
-	
-						if (isset($_GET['id_produit']) and isset($_GET['quantity'])){
-	
-							$instanceController->addProduitToPanier($_GET['id_produit'],$_GET['quantity']);
-	
+					case "panier":
+
+						include_once("pages/panier/Paniercontroler.php");
+
+						$instanceController = new ControllerPanier();
+
+						if (isset($_SESSION['id_client']) && !isset($_SESSION['is_admin']))
+						{
+							if (!empty($_POST['id_produit']))
+							{
+								$delete = $instanceController6->delete_produit_panier($_POST['id_produit']);
+								$instanceController6->redirectUser();
+							}
+							if (!empty($_POST['validation']))
+							{
+								$addCommande = $instanceController6->create_commande($_POST['prix_commande']);
+								$remove_cagnotte = $instanceController6->remove_cagnotte($_SESSION['id_client'], $_POST['prix_commande']);
+								$add_tresorerie = $instanceController6->add_tresorerie($_POST['prix_commande']);
+								$deleteAll = $instanceController6->delete_all_panier();
+								$instanceController6->redirectUserCommande();
+							}
+							$instanceController6->includeView();
 						}
-						print_r($_SESSION['panier']);
+						else
+						{
+							$instanceController6->redirectUserAccueil();
+						}
+
+						$instanceController->includeView();
 					
 						break;
 

@@ -1,6 +1,6 @@
 <?php
 
-    include_once ('tools/DataBaseLinker.php');
+    include_once ('tools/DatabaseLinker.php');
 
     include_once('DTO/DatabaseProduitsDTO.php');
 

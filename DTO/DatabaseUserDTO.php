@@ -6,7 +6,7 @@
         private $id_client;
         private $nom;
         private $prenom;
-        private $mail;
+        private $email;
         private $montant;
         private $password;
         private $admin;
@@ -44,7 +44,7 @@
         }
 
         public function getMail(){
-            return $this -> mail;
+            return $this -> email;
         }
 
         public function getMontant(){
@@ -69,7 +69,7 @@
         }
         
         public function setMail($mail_client){
-            $this -> mail = $mail_client;
+            $this -> email = $mail_client;
         }
 
         public function setMontant($montant_client){

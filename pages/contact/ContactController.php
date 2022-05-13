@@ -29,7 +29,7 @@
 
         public function includeview()
         {
-
+            require_once 'tools/header.php';
             include_once "pages/contact/contact.php";
         }
 

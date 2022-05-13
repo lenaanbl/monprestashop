@@ -1,188 +1,122 @@
 
+<div id="mainNavigation">
+  <nav role="navigation navbar-hide-on-scroll fixed-top">
+    <div class="py-3 text-center border-bottom">
+      <h1 class="text-center display-5 text-light">PrestaChope</h1>
+    </div>
+  </nav>
+  <div class="navbar-expand-md">
+    <div class="navbar-dark text-center my-2">
+      <button class="navbar-toggler w-75" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span> <span class="align-middle">Menu</span>
+      </button>
+    </div>
+    <div class="text-center mt-3 collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav mx-auto ">
 
-        <nav>
 
-            <div class="logo">
-                <h4>Prestachope</h4>
-            </div>
+      <?php 
+      
+        if(isset($_SESSION["id_client"])){
+
+            if(isset($_SESSION['admin'])){
+
+                //partie administrateur
+
+            }
+
+            else{ ?>
             
-            <ul  class="nav-links">
-
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="index.php?page=accueil">Accueil</a>
+                </li>   
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="index.php?page=profil">Profil</a>
+                </li>      
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php?page=contact">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php?page=panier">Panier</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php?page=deconnexion">Se déconnecter</a>
+                </li>
+              
             <?php
-                if(!empty($_SESSION['admin'])){
+            } ?>
+
+        <?php
+
+        }
+
+        else{      
             ?>
-                <li><a href="index.php">Home</a></li>
-                <li><a href="index.php?page=message">Messages</a></li>
-                <li><a href="index.php?page=add_produit">Produits</a></li>
-                <li><a href="index.php?page=user_ban">Clients</a></li>
-                <li><a href="index.php?page=deconnexion">Deconnexion</a></li>
 
-            <?php } ?>
+                <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="index.php?page=accueil">Accueil</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="index.php?page=connexion">Se connecter</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="index.php?page=inscription">S'inscrire</a>
+                </li>
 
-            <?php
-                if(!empty($_SESSION['id_client']) && $_SESSION['admin'] == false){
+
+        <?php
+            }
+
             ?>
-                <li><a href="index.php">Home</a></li>
-                <li><a href="index.php?page=insertMessage">Contact Us</a></li>
-                <li><a href="index.php?page=profil">Mon profil</a></li>
-                <li><a href="index.php?page=deconnexion">Deconnexion</a></li>
 
-            <?php } ?>  
-                    
-            <?php
-                
-                if(empty($_SESSION['id_client']) && empty($_SESSION['admin'])){
-            ?>
-                <li><a href="index.php">Home</a></li>
-                <li><a href="index.php?page=connexion">Login</a></li>
-                <li><a href="index.php?page=inscription">Sign Up</a></li>
-
-            <?php } ?>
-
-            </ul>
-
-            <div class="burger">
-                <div class="line1"></div>
-                <div class="line2"></div>
-                <div class="line3"></div>
-
-            </div>
-
-        </nav>
-
-        <style>
-
-        @import url('https://fonts.googleapis.com/css2?family=Antonio:wght@200&display=swap');
+      </ul>
+    </div>
+  </div>
+</div>
 
 
-        nav
-        {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            min-height: 8vh;
-            background-color:rgb(0, 0, 0);
-            font-family: 'Antonio', sans-serif;
-        }
+<style>
 
-        .logo
-        {
-            color: rgb(255, 246, 245);
-            text-transform: uppercase;
-            letter-spacing: 10px;
-            font-size: 25px;
-        }
+#mainNavigation a {
+  font-family: 'Cabin', sans-serif;
+  font-size:14px;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  text-shadow:1px 1px 2px rgba(0,0,0,0.4)
+}
 
-        .nav-links
-        {
-            display: flex;
-            justify-content: space-around; 
-        }
-
-        .nav-links li
-        {
-            text-decoration: none;
-            list-style: none;
-        }
-
-        .nav-links a
-        {
-            color: #fff;
-            text-decoration: none;
-            letter-spacing: 3px;
-            font-weight: bold;
-            font-size: 20px;
-            padding: 15px;
-        }
-
-        .burger
-        {
-            display: none;
-            cursor: pointer;
-        }
-
-        .burger div
-        {
-            width: 25px;
-            height: 3px;
-            background-color: rgb(100, 48, 41);
-            margin: 5px;
-            transition: all 0.3s ease;
-        }
-
-        @media screen and (max-width:1024px) {
-            .nav-links
-            {
-                width: 60%;
-            }
-        }
-
-        @media screen and (max-width:650px) {
-
-            body 
-            {
-                overflow-x: hidden;
-            }
-            .nav-links
-            {
-                position: absolute;
-                right: 0%;
-                height: 92vh;
-                top: 8vh;
-                color: rgb(100, 48, 41);
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                width: 50%;
-                border-radius: 10px;
-                transform: translateX(100%);
-                transition: transform 0.5s ease-in;
-            }
-
-            .nav-links li
-            {
-                opacity: 0;
-            }
-
-            .burger
-            {
-                display: block;
-            }
-        }
-
-        .nav-active
-        {
-            transform: translateX(0%);
-        }
-
-        @keyframes navLinkFade {
-            from{
-                opacity: 0;
-                transform: translateX(50px); 
-            }
-
-            to{
-                opacity: 1;
-                transform: translateX(0px);
-            }
-        }
-
-        .toggle .line1
-        {
-            transform: rotate(-45deg) translate(-5px, 6px);
-        }
-
-        .toggle .line2
-        {
-            opacity: 0;
-        }
-
-        .toggle .line3
-        {
-            transform: rotate(45deg) translate(-5px, -6px);
-        }
-
-
-        </style>
-
-
+.dropdown-menu {
+  background:#03727d
+}
+a.dropdown-toggle {
+  color:#dfdfdf !important
+}
+a.dropdown-item:hover {
+  color:#03727d !important
+}
+.nav-item a{
+  color:aliceblue;
+}
+.nav-item a:hover {
+  color:#fff
+}
+.nav-item{
+  min-width:12vw;
+}
+#mainNavigation {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  z-index:123;
+  padding-bottom:80px;
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#000000+0,000000+100&0.65+0,0+100;Neutral+Density */
+background: linear-gradient(to bottom,  rgba(0,0,0,0.85) 0%,rgba(0,0,0,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=0 ); /* IE6-9 */
+}
+#navbarNavDropdown.collapsing .navbar-nav,
+#navbarNavDropdown.show .navbar-nav{
+  background:#037582;
+  padding:12px;
+}
+</style>

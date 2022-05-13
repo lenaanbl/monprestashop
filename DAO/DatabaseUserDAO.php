@@ -23,11 +23,16 @@
                 $user->setIdClient($result['id_client']);
                 $user->setPrenom($result['prenom']);
                 $user->setNom($result['nom']);
-                $user->setMail($result['mail']);
+                $user->setMail($result['email']);
                 $user->setMontant($result['montant']);
                 $user->setPassword($result['password']);
                 $user->setAdmin($result['admin']);
                 $user->setIsBan($result['ban']);
+            }
+
+            else{
+
+                echo "CLIENT NULL";
             }
 
             return $user;
@@ -56,7 +61,7 @@
                     $user->setIdClient($result['id_client']);
                     $user->setPrenom($result['prenom']);
                     $user->setNom($result['nom']);
-                    $user->setMail($result['mail']);
+                    $user->setMail($result['email']);
                     $user->setMontant($result['montant']);
                     $user->setPassword($result['password']);
                     $user->setIsBan($result['ban']);
@@ -99,34 +104,37 @@
 
         public static function getUserWithEmailPassword($email, $password){
 
-            $client = null;
-
             $connex = DatabaseLinker::getConnexion();
 
-            $state = $connex -> prepare('SELECT * FROM clients WHERE email=? AND password=sha1(?)');
+            $state = $connex -> prepare('SELECT * FROM clients WHERE email=? AND password=?');
             $state->bindParam(1, $email);
             $state->bindParam(2, $password);
 
             $state->execute();
-
-            $lineResultat = $state->fetchAll();
-            $client = new UserDTO();
-            $lineResultat = $state->fetch();
+            
+            $result = $state->fetchAll();
+            
     
-            if (empty($lineResultat)) 
+            if (empty($result)) 
                 {
                     $client = null;
+                    echo "<p>CLIENT NULL</p>";
                 }
-            else
+
+            if(sizeof($result)>0)
             {
+                $client = new UserDTO();
+                $lineResultat = $result[0];
                 $client->setIdClient($lineResultat['id_client']);
                 $client->setNom($lineResultat['nom']);
                 $client->setPrenom($lineResultat['prenom']);
-                $client->setPassword($lineResultat['password']);
                 $client->setMail($lineResultat['email']);
                 $client->setMontant($lineResultat['montant']);
+                $client->setPassword($lineResultat['password']);              
                 $client->setAdmin($lineResultat['admin']);
                 $client->setIsBan($lineResultat['ban']);
+
+                echo "CLIENT TROUVE";
             }
 
             return $client;
@@ -153,32 +161,42 @@
         }
 
         public static function getAdmin($id)
+    {
+        $connex = DatabaseLinker::getConnexion();
+        $state = $connex->prepare("SELECT * FROM clients WHERE id_client = ?");
+        $state->bindParam(1, $id);
+        $state->execute();
+        $admin = new UserDTO();
+        $lineResultat = $state->fetch();
+        
+        if (empty($lineResultat)) 
         {
-            $connex = DatabaseLinker::getConnexion();
-            $state = $connex->prepare("SELECT * FROM clients WHERE id_client = ?");
-            $state->bindParam(1, $id);
-            $state->execute();
-            $result = $state->fetch();
+            $admin = null;
             
-            if (empty($result)) 
-            {
-                $user = null;
-            }
-            else
-            {
-                $user = new UserDTO();
-                    $user->setIdClient($result['id_client']);
-                    $user->setPrenom($result['prenom']);
-                    $user->setNom($result['nom']);
-                    $user->setMail($result['mail']);
-                    $user->setMontant($result['montant']);
-                    $user->setPassword($result['password']);
-                    $user->setAdmin($result['admin']);
-                    $user->setIsBan($result['ban']);
-            }
-            return $user;
         }
+        else
+        {
+            $admin->setIdClient($lineResultat['id_client']);
+            $admin->setNom($lineResultat['nom']);
+            $admin->setPrenom($lineResultat['prenom']);
+            $admin->setMail($lineResultat['email']);
+            $admin->setMontant($lineResultat['montant']);
+            $admin->setPassword($lineResultat['password']);          
+            $admin->setAdmin($lineResultat['admin']);
+
+        }
+    return $admin;
+    }
     
+
+    public static function removeCagnotte($id_client, $montant_restant)
+    {
+        $connex = DatabaseLinker::getConnexion();
+        $state = $connex->prepare("UPDATE clients SET montant = ? WHERE id_client = ?");
+        $state->bindParam(1, $montant_restant);
+        $state->bindParam(2, $id_client);
+        $state->execute();
+    }
 
     }
     

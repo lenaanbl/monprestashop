@@ -6,6 +6,7 @@ include_once('DAO/DatabaseUserDAO.php');
 class InscriptionController{
 
     public function includeView(){
+        require_once 'tools/header.php';
         include_once('pages/inscription/inscription.php');
     }
 

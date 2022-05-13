@@ -1,5 +1,5 @@
-<div class = "title">
-  <h2>Nos produits</h2>
+<div>
+  <img src="assets/images/accueil_fond.jpg">
 </div>
 
   <?php 
@@ -13,7 +13,7 @@
       ?>
 
     <!-- on affiche le nom de la catégorie -->
-    <div class="h3"><?php echo $cat->getNomCategorie() ?></div>  
+    <h3 class="display-6 mt-5 text-center"><?php echo $cat->getNomCategorie() ?></h3>  
     <div class="container-md pt-5 overflow-hidden">		
     <div class="row gy-5 my-2">
 

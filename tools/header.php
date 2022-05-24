@@ -1,6 +1,6 @@
 
 <div id="mainNavigation">
-  <nav role="navigation navbar-hide-on-scroll fixed-top">
+  <nav role="navigation navbar-hide-on-scroll">
     <div class="py-3 text-center border-bottom">
       <h1 class="text-center display-5 text-light">PrestaChope</h1>
     </div>
@@ -17,7 +17,7 @@
 
       <?php 
       
-        if(isset($_SESSION["id_client"])){
+        if(isset($_SESSION["id_client"]) && !isset($_SESSION['admin'])){
 
             if(isset($_SESSION['admin'])){
 
@@ -30,6 +30,9 @@
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="index.php?page=accueil">Accueil</a>
                 </li>   
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php?page=produits">Boutique</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="index.php?page=profil">Profil</a>
                 </li>      
@@ -82,7 +85,7 @@
   font-size:14px;
   text-transform:uppercase;
   letter-spacing:2px;
-  text-shadow:1px 1px 2px rgba(0,0,0,0.4)
+  text-shadow:1px 1px 2px rgba(0,0,0,0.5)
 }
 
 .dropdown-menu {

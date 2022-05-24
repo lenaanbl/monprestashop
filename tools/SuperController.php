@@ -268,7 +268,7 @@
 
 						include_once("pages/panier/Paniercontroler.php");
 
-						$instanceController = new ControllerPanier();
+						$instanceController6 = new ControllerPanier();
 
 						if (isset($_SESSION['id_client']) && !isset($_SESSION['is_admin']))
 						{
@@ -292,10 +292,32 @@
 							$instanceController6->redirectUserAccueil();
 						}
 
-						$instanceController->includeView();
+						$instanceController6->includeView();
 					
 						break;
 
+				
+					case "produits":
+
+						include_once("pages/produits/ProduitsController.php");
+                    
+						$instanceController7 = new ProduitsController();
+   
+						if (!isset($_SESSION['is_admin']))
+					   {
+						   if (!empty($_POST['id_produit']))
+							   {
+								   $insert = $instanceController7->add_produit_panier($_POST['id_produit'], $_POST['quantite']);
+								   $instanceController7->redirectUser();
+							   }
+						   }
+						   else
+						   {
+							   $instanceController7->redirectUserAccueil();
+						   } $instanceController7->includeView();
+
+
+						break;
 			}
 		}
 	}

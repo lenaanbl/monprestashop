@@ -12,12 +12,10 @@
 
     <div class="profil-container">
         <div class="profil-title">
-            Profil de <?php echo $user->getPseudo(); ?>
         </div>
 
 		<br>
         
-		<img class="profil-avatar" src="assets/images/images_profil/<?php echo $user->getPathPhoto(); ?>" alt=""/>
 		<p>Votre montant est de : <?php echo $user->getMontant(); ?>
 
     	<br>
@@ -39,16 +37,7 @@
 				<input type="hidden" name="id_client" value="<?php echo $user->getIdClient(); ?>">
 				<input class="modify-btn" type="submit" value="modifier">
 				<br>
-				<label class="label-profil">Pseudo : <?php echo $user->getPseudo(); ?></label>
-				<input class="modify-Client" type="text" name="pseudo">
-				<input type="hidden" name="id_client" value="<?php echo $user->getIdClient(); ?>">
-				<input class="modify-btn" type="submit" value="modifier">
-				<br>
-				<label class="label-profil">Adresse : <?php echo $user->getAdresse(); ?></label>
-				<input class="modify-Client" type="text" name="adresse">
-				<input type="hidden" name="id_client" value="<?php echo $user->getIdClient(); ?>">
-				<input class="modify-btn" type="submit" value="modifier">
-				<br>
+				
 				<label class="label-profil">Mail : <?php echo $user->getMail(); ?></label>
 				<input class="modify-Client" type="text" name="mail">
 				<input type="hidden" name="id_client" value="<?php echo $user->getIdClient(); ?>">

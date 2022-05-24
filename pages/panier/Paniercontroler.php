@@ -1,7 +1,7 @@
 <?php
 
 require('DAO/DatabaseCommandeDAO.php');
-require('DAO/DatabaseProduitDAO.php');
+require('DAO/DatabaseProduitsDAO.php');
 require('DAO/DatabaseUserDAO.php');
 require('DAO/DatabaseEntrepriseDAO.php');
 

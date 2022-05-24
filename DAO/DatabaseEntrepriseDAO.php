@@ -1,10 +1,7 @@
 <?php
 
 require_once 'tools/DatabaseLinker.php';
-require_once 'DTO/EntrepriseDTO.php';
-
-
-
+require_once 'DTO/DatabaseEntrepriseDTO.php';
 
 
 class EntrepriseDAO{

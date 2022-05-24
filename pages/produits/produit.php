@@ -23,7 +23,7 @@
 
 
       <div class="col-12 col-md-6 col-lg-3">
-        <a href="" class="content-food text-muted nav-link text-center">
+        <p class="content-food text-muted nav-link text-center"></p>
         <div class="card" style="width: 18rem;">
           <img src="assets/images/produits/<?php echo $prod->getPathPhoto() ?>" class="card-img-top" style="height: 320px;" alt="">
           <div class="card-body">

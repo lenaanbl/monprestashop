@@ -111,20 +111,19 @@
             $state->bindParam(2, $password);
 
             $state->execute();
-            
-            $result = $state->fetchAll();
+            $client = new UserDTO();
+            $lineResultat = $state->fetch();
             
     
-            if (empty($result)) 
+            if (empty($lineResultat)) 
                 {
                     $client = null;
-                    echo "<p>CLIENT NULL</p>";
+                   
                 }
 
-            if(sizeof($result)>0)
+            if(sizeof($lineResultat)>0)
             {
-                $client = new UserDTO();
-                $lineResultat = $result[0];
+            
                 $client->setIdClient($lineResultat['id_client']);
                 $client->setNom($lineResultat['nom']);
                 $client->setPrenom($lineResultat['prenom']);

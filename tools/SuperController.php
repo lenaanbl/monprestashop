@@ -27,8 +27,7 @@
 
 							else
                             {
-								echo "SESSION CREEE";
-								$_SESSION['id_client'] = true;
+								
                                 $instanceController->redirectUser();
 								
                             }
@@ -36,7 +35,7 @@
                         else
                         {
                             session_destroy();
-							echo "<p>ERREUR</p>";
+							
                         }
                     }
 

@@ -9,13 +9,9 @@
 		
 	<?php 
 
-		
-
-		if (empty($_SESSION))
-		{
 			session_name("prestachope1");
 			session_start();
-		}
+		
 		
 		date_default_timezone_set('Europe/Paris');
 

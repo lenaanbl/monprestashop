@@ -24,6 +24,7 @@
 			$isClient = false;
 			$client = UserDAO::getUserWithEmailPassword($email, $password);
 
+
 			if($client != null){
 
 				if ($client->getIsBan() == 1)
@@ -32,23 +33,24 @@
 					echo "CLIENT BAN";
 				}
 
-				else
+				if($client->getAdmin() == 0)
 				{
-				
-				$_SESSION["id_client"] = $client->getIdClient();
+					$_SESSION["id_client"] = $client->getIdClient();
+					$_SESSION["panier"] = array();
 
-				$isClient = true;			
-
-				$_SESSION["panier"] = array();
-
-				$admin = UserDAO::getAdmin($_SESSION["id_client"]);
-					if ($admin->getAdmin() != "0")
+					$admin = UserDAO::getAdmin($_SESSION["id_client"]);
+					if ($admin->getAdmin() == 1)
 					{
 						$_SESSION["is_admin"] = $client->getAdmin();
-						$_SESSION["is_admin"] = true;
-						$isClient = true;
 					}
 				}
+
+
+			$isClient = true;
+
+	
+
+				
 			}
 
 			return $isClient;

@@ -1,5 +1,8 @@
-<?php 
+<div>
+  <img src="assets/images/produit.jpg" alt="">
+</div>
 
+<?php 
 
     $categories = DatabaseCategorieDAO::getAllCat();
 

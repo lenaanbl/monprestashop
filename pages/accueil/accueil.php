@@ -2,6 +2,8 @@
   <img src="assets/images/accueil_fond.jpg">
 </div>
 
+
+
 <?php 
   if(!empty($_SESSION['id_client'])){
 ?>

@@ -1,90 +1,57 @@
-<link rel="stylesheet" type="text/css" href="assets/css/produits.css" media="all" />
+<div>
+  <img src="assets/images/produit.jpg" alt="">
+</div>
 
-<?php
+<a style="margin:15px;" href="index.php?page=ajouterProduit" class="btn btn-secondary btn-lg " role="button">Ajouter un Produit</a>
 
-include_once('pages/accueil/AccueilController.php');
+<?php 
 
-$produits = AccueilController::getProduits();
+    $categories = DatabaseCategorieDAO::getAllCat();
 
-foreach($produits as $prod){
 
-?>
+    foreach($categories as $cat){
 
-<section class="manage_produit">					
+      ?>
 
-	<div class="design-content">
+    <!-- on affiche le nom de la catégorie -->
+    <h3 class="display-6 mt-5 text-center"><?php echo $cat->getNomCategorie() ?></h3>  
+    <div class="container-md pt-5 overflow-hidden">		
+		<div class="row gy-5 my-2">
+		
+		<?php       
+          $tabProduit = DatabaseCategorieDAO::getProduitsByCategorie($cat->getIdCategorie());
+          foreach($tabProduit as $prod){
+        ?>
 
-		<!-- item -->
-		<div class="design-item">
+			<div class="col-12 col-md-6 col-lg-3">
+				<p class="content-food text-muted nav-link text-center"></p>
+				<div class="card" style="width: 18rem;">
 
-			<div class="design-img">
-
-				<img src="assets/images/images_produit/<?php echo $prod->getPathPhoto(); ?>" alt="">
-
-				<span><i class="far fa-heart"></i></span>
-
-				<span><?php echo $prod->getNomProduit(); ?></span>
-
-			</div>
-
-			<div class="design-title">
-
-				<a><?php echo $prod->getDescription() . "<br/>" . $prod->getPrix(); ?> € / quantité : <?php echo $prod->getQuantite(); ?> </a>
-				
-			</div>
-			
-		</div>
-
-		<div class="form-modify">
-			<form action="" method="post">
-				<input class="modify-produit" type="file" name="picture" placeholder="photo de produit">
-				<input type="hidden" name="id" value="<?php echo $prod->getIdProduit(); ?>">
-				<input type="submit" class="modify-btn" value="modifier">	
-				<br>
-				<input class="modify-produit" type="text" name="nom" placeholder="Nouveau nom">
-				<input type="hidden" name="id" value="<?php echo $prod->getIdProduit(); ?>">
-				<input type="submit" class="modify-btn" value="modifier">
-				<br>
-				<input class="modify-produit" type="text" name="prix" placeholder="Nouveau prix">
-				<input type="hidden" name="id" value="<?php echo $prod->getIdProduit(); ?>">
-				<input class="modify-btn" type="submit" value="modifier">
-				<br>
-				<input class="modify-produit" type="text" name="quantite" placeholder="Nouvelle quantité">
-				<input type="hidden" name="id" value="<?php echo $prod->getIdProduit(); ?>">
-				<input class="modify-btn" type="submit" value="modifier">
-				<br>
-				<input class="modify-produit" type="text" name="description" placeholder="Nouvelle description">
-				<input type="hidden" name="id" value="<?php echo $prod->getIdProduit(); ?>">
-				<input class="modify-btn" type="submit" value="modifier">
-				<br>
-				<input type="hidden" name="id_produit" value="<?php echo $prod->getIdProduit(); ?>">
-				<input class="modify-btn" type="submit" value="supprimer">
-			</form>
-		</div>
-	</div>
-
-<?php } ?>
-
-	<div id="login-form">
-		<div class="form-box">
-			<div class="head-form">
-				<div class="head-font">
-					<div class="head-contain">Publier un Produit</div>
+					<form action="" method="POST">
+						<img src="assets/images/produits/<?php echo $prod->getPathPhoto() ?>" class="card-img-top" style="height: 320px;" alt="">
+						<div class="card-body">
+							<h5 class="card-title"><input type="text" class=" text-center name mt-2" name="nom" placeholder="<?php echo $prod->getNomProduit();?>"></h5>
+							<p class="card-text">Prix : <input type="text" class=" text-center name mt-2" name="prix" placeholder="<?php echo $prod->getPrix();?>"> €</p>
+							<p> Description : <br>
+							<textarea class="form-control z-depth-1" rows="3" name="description" placeholder="<?php echo $prod->getDescription();?>"></textarea></p>
+							<input type="hidden" name="id" value="<?php echo $prod->getIdProduit(); ?>">										
+							<input type="submit" class="modify-btn" value="modifier">
+							
+					
+					</form>					
 				</div>
 			</div>
-			<form method="POST" id="login" class='input-group-login' action="">
-
-				<input type="text" name="nom_produit" class="input-field" placeholder="Nom du produit" required>
-				<input type="text" name="quantite" class="input-field" placeholder="Quantité" required>
-				<input type="text" name="prix" class="input-field" placeholder="Prix" required>
-				<input type="text" name="description" class="input-field" placeholder="Description" required>
-				<input type="file" name="photo" class="input-field" placeholder="photo du produit" required>
-				<input type="text" name="categorie" class="input-field" placeholder="1 = bière" required>
-
-				<button type="submit" class="submit-btn">Poster</button>
-			</form>
-		</div>
+				
+			
+			
+			
 	</div>
+      <?php 
+        }		
 	
+      }        
+      
+      ?>
 
-</section>
+    </div>	
+	</div>

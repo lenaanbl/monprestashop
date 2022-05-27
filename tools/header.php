@@ -17,11 +17,32 @@
 
       <?php 
       
-        if(isset($_SESSION["id_client"]) && !isset($_SESSION['admin'])){
+        if(isset($_SESSION["id_client"])){
 
-            if(isset($_SESSION['admin'])){
+            if(isset($_SESSION['is_admin'])){ ?>
 
-                
+
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="index.php?page=accueil">Accueil</a>
+                </li>   
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php?page=produits">Boutique</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="index.php?page=gestionProduit">Gestion des produits</a>
+                </li>      
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php?page=gestionMessage">Gestion des Messages</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php?page=gestionUser">Gestion Utilisateurs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php?page=deconnexion">Se déconnecter</a>
+                </li>
+
+
+            <?php
 
             }
 
@@ -47,9 +68,7 @@
                 </li>
               
             <?php
-            } ?>
-
-        <?php
+            } 
 
         }
 

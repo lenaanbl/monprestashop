@@ -6,20 +6,25 @@
     class UserDAO
     {
         public static function getUserById($id){
-
-            $user = null;
-
             $connex = DatabaseLinker::getConnexion();
 
             $state = $connex->prepare('SELECT * FROM clients WHERE id_client = ?');
             $state->bindParam(1, $id);
+            
             $state->execute();
-            $resultats = $state->fetchAll();
 
-            if(sizeof($resultats) > 0)
+            $user = new UserDTO();
+            $result = $state->fetch();
+            
+
+            if(empty($result))
             {   
-                $result = $resultats[0];
-                $user= new UserDTO();
+                
+               $user = null;
+            }
+
+            else{
+
                 $user->setIdClient($result['id_client']);
                 $user->setPrenom($result['prenom']);
                 $user->setNom($result['nom']);
@@ -28,11 +33,6 @@
                 $user->setPassword($result['password']);
                 $user->setAdmin($result['admin']);
                 $user->setIsBan($result['ban']);
-            }
-
-            else{
-
-                echo "CLIENT NULL";
             }
 
             return $user;
@@ -121,7 +121,7 @@
                    
                 }
 
-            if(sizeof($lineResultat)>0)
+            else
             {
             
                 $client->setIdClient($lineResultat['id_client']);

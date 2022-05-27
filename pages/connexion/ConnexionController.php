@@ -12,7 +12,7 @@
 		{
 			require_once 'tools/header.php';
 			include_once('pages/connexion/login.php');
-			
+			include_once 'tools/footer.html'; 
 		}
 
 		public function redirectUser(){
@@ -33,7 +33,7 @@
 					echo "CLIENT BAN";
 				}
 
-				if($client->getAdmin() == 0)
+				else
 				{
 					$_SESSION["id_client"] = $client->getIdClient();
 					$_SESSION["panier"] = array();
@@ -45,11 +45,7 @@
 					}
 				}
 
-
 			$isClient = true;
-
-	
-
 				
 			}
 

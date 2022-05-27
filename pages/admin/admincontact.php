@@ -1,39 +1,44 @@
-<?php
-
-    include_once('tools/header.php');
-
-    include_once('pages/contact/ContactController.php');
-   
-?>
+<div>
+  <img src="assets/images/contact.jpg" alt="">
+</div>
 
 
-<link rel="stylesheet" href="assets/css/message.css">
+	<div class="container-md pt-5 overflow-hidden">		
+		<div class="row gy-5 my-2">
+		<h3 class="display-6 mt-5 text-center">Messages des clients</h3>  
 
-
-				<a href="index.php?page=admin&admin=admin_ban">Accéder a la gestion des utilisateurs</a>
-				<a href="index.php?page=admin&admin=admin_produit">Accéder a l'administration des produits</a>
-				<a href="index.php?page=admin&admin=admin_categorie">Accéder a l'administration des catégories</a>
-
-				<p> Les messages envoyer par les utilisateurs </p>
-				<?php
-					$tabAllContact = MessageController::Messages();
-					foreach ($tabAllContact as $index)
-					{
-						?>
-						<div class="message">
-						<?php						
-							$nom_auteur = $_SESSION['id_client'];
-							echo "Sujet du message : ".$index->getSujet().'<BR>';
-							echo "Contenu : ".$index->getMessage().'<br>';
-							echo "Envoyer le : ".$index->getDate().'<br>';
-							echo "par ".$nom_auteur.'<br>';
-						?>
-						</div>
-						<?php
-					}
+			<?php
+				$tabAllContact = ControllerAdmin::getAllMessage();
+				foreach ($tabAllContact as $index)
+				{
 					?>
+					
+							<div class="col-12 col-md-6 col-lg-3">
+								
+								<div class="card testimonial-card mt-2 mb-3">
+									<div class="card-up aqua-gradient"></div>
+									<div class="avatar mx-auto white">
+										<img src="https://mdbootstrap.com/img/Photos/Avatars/img%20%2831%29.jpg" class="rounded-circle img-fluid"
+										alt="woman avatar">
+									</div>
+									<div class="card-body text-center">
+										<h4 class="card-title font-weight-bold">
+											<?php
+											$mail_auteur = ControllerAdmin::getMailClient($index->getIdClient());
+											echo $mail_auteur?> </h4>
+										<hr>
+										<p><i class="fas fa-quote-left"></i> <?php echo $index->getMessage(); ?></p>
+									</div>
+								</div>
+							</div>	
+							
+						
+					<?php
+				}
+				?>
 
-		
+		</div>
+	</div>
 
 <?php
 

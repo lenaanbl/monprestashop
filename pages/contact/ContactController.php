@@ -2,7 +2,7 @@
 
     include_once("DAO/DatabaseMessageDAO.php");
 
-    class MessageController
+    class ContactController
     {
 
         private static $id_message;
@@ -14,23 +14,24 @@
 
         public static function setIdMessage($id_message)
 		{
-			MessageController::$id_message = $id_message;
+			ContactController::$id_message = $id_message;
 		}
 		
 		public static function getIdMessage() 
 		{
-			return MessageController::$id_message;
+			return ContactController::$id_message;
 		}
 		
 		public static function getListMessage() 
 		{
-			return MessagesDAO::getMessageById(MessageController::$id_message);
+			return MessagesDAO::getMessageById(ContactController::$id_message);
 		}
 
         public function includeview()
         {
             require_once 'tools/header.php';
             include_once "pages/contact/contact.php";
+            include_once 'tools/footer.html'; 
         }
 
         public static function Messages()
@@ -47,6 +48,11 @@
         {
             $insert = MessagesDAO::insertMessage($contain, $sujet);
             return $insert;
+        }
+
+        public static function redirectUser()
+        {
+            header('Location: index.php?page=accueil');
         }
 
     }   

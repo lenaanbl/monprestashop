@@ -25,6 +25,7 @@
                 $message->setMessage($result['message']);
                 $message->setDate($result['date']);
                 $message->setSujet($result['sujet']);
+                $message->setIdClient($result['id_client']);
 
                 
             }
@@ -64,7 +65,7 @@
 
             if(empty($resultats)){
 
-                echo $message;
+                $message = null;
             }
 
             else{
@@ -75,7 +76,8 @@
                     $mess->setIdMessage($result['id_message']);
                     $mess->setMessage($result['message']);
                     $mess->setDate($result['date']);
-                    $mess->setSujet($result['sujet']);
+                    $mess->setSujet($result['sujet']);                  
+                    $mess->setIdClient($result['id_client']);
                     $message[]= $mess;
                 }
 
@@ -93,11 +95,12 @@
             
             $connexionbdd = DatabaseLinker::getConnexion();
 
-            $reponse = $connexionbdd->prepare('INSERT into messages (message, date, sujet) VALUES (?, CURRENT_TIMESTAMP, ?)');
+            $reponse = $connexionbdd->prepare('INSERT into messages (message, date, sujet, id_client) VALUES (?, CURRENT_TIMESTAMP, ?,?)');
 
-            $reponse->bindParam(1, $contain);
-            $reponse->bindParam(2, $sujet);
-            $reponse -> execute();
+            $reponse->execute(array($contain, $sujet, $_SESSION["id_client"]));
+            $resulte = $reponse->fetch();
+            $reponse->execute();
+            
             
         }
 

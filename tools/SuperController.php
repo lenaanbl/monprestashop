@@ -92,28 +92,75 @@
 					break;
 
 				
-				case 'message':
+				case 'gestionMessage':
 
-						include_once('pages/admin/admincontact.php');					
+						include_once('pages/admin/AdminController.php');
+
+						$instanceController = new ControllerAdmin();
+						
+						$instanceController->includeView("messages");
 
 					break;
 				
+				case 'gestionProduit':
 
-				case 'insertMessage' :
+					include_once('pages/admin/AdminController.php');
+
+					$instanceController = new ControllerAdmin();
+
+					if(!empty($_POST['nom']) || !empty($_POST['prix']) || !empty($_POST['description'])) 
+                    { 
+					
+                        $nom = 'nom';
+                        $prix = 'prix';                        
+						$description = 'description';
+
+                        
+						if(!empty($_POST['nom']))
+						{							
+							$instanceController->update_produit($_POST['nom'], $nom, $_POST['id']);
+							
+						}
+						
+						if(!empty($_POST['prix']))
+						{
+							$instanceController->update_produit($_POST['prix'], $prix, $_POST['id']);
+							
+						}
+						
+
+						if(!empty($_POST['description']))
+						{
+							$instanceController->update_produit($_POST['description'], $description, $_POST['id'] );
+							
+						}	
+                    
+                    }
+
+					if (!empty($_POST['id_produit']))
+					{
+						$suppr = $instanceController->delete_produit($_POST['id_produit']);
+					}
+
+					$instanceController->includeView('produits');
+
+					break;
+
+				case 'contact' :
 
 					include_once('pages/contact/ContactController.php');
 
-						$instanceController = new MessageController();
-
-						$instanceController->includeView();
+						$instanceController = new ContactController();
 						
 
 						if (!empty($_POST['sujet']) && !empty($_POST['message']))
 						{
 							$instanceController->createMessage($_POST['message'], $_POST['sujet']);
 							
-							Rooter::redirectUser('accueil');
+							$instanceController->redirectUser();
 						}
+
+						$instanceController->includeView();
 
 					break;
 
@@ -138,7 +185,7 @@
 
 					break;
 				
-				case 'add_produit' : 	
+				case 'ajouterProduit' : 	
 					
 					include_once('pages/admin/AdminController.php');
 
@@ -146,61 +193,24 @@
 
 					//insérer un nouveau produit
 
-					if(!empty($_POST['photo']) && !empty($_POST['nom_produit']) && !empty($_POST['quantite']) && !empty($_POST['prix']) && !empty($_POST['description']) && !empty($_POST['categorie'])){					
+					if(!empty($_POST['photo']) && !empty($_POST['nom_produit']) && !empty($_POST['quantite']) && !empty($_POST['prix']) && !empty($_POST['description']) && !empty($_POST['id_cat'])){					
 
-						$instanceController->create_produit($_POST['nom_produit'], $_POST['description'], $_POST['quantite'], $_POST['prix'], $_POST['photo'], $_POST['categorie']);
+						$instanceController->create_produit($_POST['nom_produit'], $_POST['description'], $_POST['quantite'], $_POST['prix'], $_POST['photo'], $_POST['id_cat']);
 
 					}
 
-					//modifier un produit
+					$instanceController = ControllerAdmin::includeView('addProduit');
 
-					if(!empty($_POST['picture']) || !empty($_POST['nom']) || !empty($_POST['prix']) || !empty($_POST['quantite']) || !empty($_POST['description'])) 
-                    { 
-						$picture = 'picture';
-                        $nom = 'nom';
-                        $prix = 'prix';
-                        $quantite = 'quantite';
-						$description = 'description';
+					break;
 
-                        
-						if(!empty($_POST['nom']))
-						{							
-							$instanceController->update_produit($_POST['nom'], $nom, $_POST['id']);
-							Rooter::redirectUser('add_produit');
-						}
+				case 'gestionUser':
+					
+					include_once('pages/admin/AdminController.php');
 
-						if(!empty($_POST['picture']))
-						{							
-							$instanceController->update_produit($_POST['picture'], $picture, $_POST['id']);
-							Rooter::redirectUser('add_produit');
-						}
-						
-						if(!empty($_POST['prix']))
-						{
-							$instanceController->update_produit($_POST['prix'], $prix, $_POST['id']);
-							Rooter::redirectUser('add_produit');
-						}
-						if(!empty($_POST['quantite']))
-						{
-							$instanceController->update_produit($_POST['quantite'], $quantite, $_POST['id']);
-							Rooter::redirectUser('add_produit');
-						}
+					$instanceController = new ControllerAdmin();
 
-						if(!empty($_POST['description']))
-						{
-							$instanceController->update_produit($_POST['description'], $description, $_POST['id'] );
-							Rooter::redirectUser('add_produit');
-						}	
-						
-						if (!empty($_POST['id_produit']))
-						{
-							$instanceController->delete_produit($_POST['id_produit']);
-							Rooter::redirectUser('add_produit');
-						}
-                    
-                    }
-
-					$instanceController = ControllerAdmin::includeView('admin_produit');
+					$instanceController->includeView('user_ban');
+					
 
 					break;
 
@@ -258,6 +268,7 @@
 						}
                         
 					}
+					
 
 					$instanceController->includeView();
 

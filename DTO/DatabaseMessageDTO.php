@@ -7,6 +7,25 @@ class MessagesDTO
     private $message;
     private $date;
     private $sujet;
+    private $email;
+    private $idClient;
+
+    public function getIdClient(){
+        return $this->idClient;
+    }
+
+    public function setIdClient($id){
+        $this->idClient = $id;
+    }
+
+
+    public function getEmail(){
+        return $this->email;
+    }
+
+    public function setEmail($email){
+        $this->email = $email;
+    }
     
     public function getIdMessage()
     {

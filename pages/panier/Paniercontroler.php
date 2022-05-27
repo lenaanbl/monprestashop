@@ -13,6 +13,7 @@ class ControllerPanier
 	{
 		require_once 'tools/header.php';
 		include_once("pages/panier/Panier.php");
+		include_once 'tools/footer.html'; 
 	}
 	
 

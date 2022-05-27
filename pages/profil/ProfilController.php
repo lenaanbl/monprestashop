@@ -13,6 +13,7 @@
 		{
 			require_once 'tools/header.php';
 			include_once('profil.php');
+			include_once 'tools/footer.html'; 
 		}
 		
 		public static function setIdClient($id_client)

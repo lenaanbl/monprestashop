@@ -11,10 +11,10 @@
         ?>
                     <div class="ban">
                         <?php
-                        echo "Voulez vous bannir l'utilisateur ".$user->getPseudo()." ?";
+                        echo "Voulez vous bannir l'utilisateur ".$user->getNom()." ?";
                         ?>
                         <form action="" method="post">
-                            <input type="hidden" name="pseudo" value="<?php echo $user->getPseudo();?>">
+                            <input type="hidden" name="mail" value="<?php echo $user->getNom();?>">
                             <input class="modify-btn"type="submit" value="Bannir">
                         </form>
                     </div>
@@ -25,10 +25,10 @@
                 ?>
                     <div class="ban">
                         <?php
-                        echo "Voulez vous débannir l'utilisateur ".$user->getPseudo()." ?";
+                        echo "Voulez vous débannir l'utilisateur ".$user->getNom()." ?";
                         ?>
                         <form action="" method="post">
-                            <input type="hidden" name="pseudo_deban" value="<?php echo $user->getPseudo();?>">
+                            <input type="hidden" name="mail_deban" value="<?php echo $user->getNom();?>">
                             <input class="modify-btn" type="submit" value="Débannir">
                         </form>
                     </div> 
@@ -57,7 +57,7 @@
 
                                     <img class="card-img-top" src="assets/images/images_profil/<?php  echo $user_ban->getPathPhoto(); ?>" alt="">
                                     <p class="card-text">
-                                        Pseudo = <?php echo $user_ban->getPseudo() ?>
+                                        Mail = <?php echo $user_ban->getNom() ?>
 
                                     </p>
                                 </div>

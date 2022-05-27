@@ -1,9 +1,7 @@
 <?php
- include("DAO/DatabaseProduitsDAO.php");
+ include("DAO/DatabaseUserDAO.php");
 
-$produits = ProduitDAO::getProduitsByCategorie(2);
-$prod[] = $produits;
-
-var_dump($prod);
+ $user = UserDAO::getUserById(3);
+ echo $user->getMail();
 
 ?>

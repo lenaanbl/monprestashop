@@ -10,17 +10,28 @@ class ControllerAdmin
 {
 	public static function includeView($admin_page)
 	{
-		if ($admin_page == "admin_messages")
-		{
-			require_once('view_admin_messages.php');
+		if ($admin_page == "messages")
+		{	
+			include_once 'tools/header.php';
+			require_once('pages/admin/admincontact.php');
+			include_once 'tools/footer.html';
 		}
 		elseif ($admin_page == "user_ban")
 		{
 			require_once('userban.php');
 		}
-		elseif ($admin_page == "admin_produit")
+		elseif ($admin_page == "produits")
 		{
-			require_once('produits.php');
+			include_once 'tools/header.php';
+			require_once('pages/admin/produits.php');
+			include_once 'tools/footer.html';
+		}
+
+		elseif ($admin_page == "addProduit")
+		{
+			include_once 'tools/header.php';
+			require_once('pages/admin/ajouterProduit.php');
+			include_once 'tools/footer.html';
 		}
 		elseif ($admin_page == "admin_categorie")
 		{
@@ -33,18 +44,18 @@ class ControllerAdmin
 	}
 
 	
-	public static function get_all_contact()
+	public static function getAllMessage()
 	{
 		$tab_contact = MessagesDAO::getAllMessages();
 		return $tab_contact;
 	}
 
 	//en rapport avec les clients
-	public static function getNomClient($id)
+	public static function getMailClient($id)
 	{
-		$nom = UserDAO::getUserById($id);
-		$nom = $nom->getPseudo();
-		return $nom;
+		$mail = UserDAO::getUserById($id);
+		$mail = $mail->getMail();
+		return $mail;
 	}
 	public static function getAllClient()
 	{

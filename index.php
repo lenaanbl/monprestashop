@@ -34,10 +34,5 @@
 	?>
 	
 
-	<footer>
-		<?php include_once('tools/footer.html'); ?>
-	</footer>
-	
-
 	</body>
 </html>

@@ -9,6 +9,7 @@ class ProduitsController
 	{
 		require_once('tools/header.php');
 		require_once('produit.php');
+		include_once 'tools/footer.html'; 
 	
 	}
 
